@@ -28,6 +28,9 @@ var (
 			{ApplicationId: 2, Limits: []conf.LimitSetting{
 				{Pattern: "mdm-master/group/method", MaxCount: 0, Timeout: "10s"},
 			}},
+			{ApplicationId: 3, Limits: []conf.LimitSetting{
+				{Pattern: "mdm-master/group/method", MaxCount: 1, Timeout: "10s"},
+			}},
 		},
 		Storing: conf.StoringSetting{
 			Size:    100,
@@ -60,6 +63,9 @@ var (
 		4: {appId: 1, path: []string{
 			"mdm-master/group5/method", "mdm-master/group5/method", "mdm-master/group5/method",
 		}},
+		5: {appId: 3, path: []string{
+			"mdm-master/group/method", "mdm-master/group/method", "mdm-master/group/method",
+		}},
 	}
 )
 
@@ -73,7 +79,13 @@ func TestAccounting(t *testing.T) {
 	}
 	worker.init(accountingSetting)
 
-	req := reqExample[4]
+	res := []bool{true, false, false}
+	req := reqExample[5]
+	for i, path := range req.path {
+		a.Equal(res[i], AcceptRequest(req.appId, path))
+	}
+
+	req = reqExample[4]
 	for _, path := range req.path {
 		a.True(AcceptRequest(req.appId, path))
 	}
