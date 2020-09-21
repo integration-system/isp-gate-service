@@ -1,3 +1,5 @@
+## 2.7.2
+* fix request limit don't work and add new test case
 ## 2.7.1
 * fix default local config
 ## 2.7.0
