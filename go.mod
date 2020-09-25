@@ -21,5 +21,3 @@ require (
 	golang.org/x/net v0.0.0-20200822124328-c89045814202
 	google.golang.org/grpc v1.29.1
 )
-
-replace github.com/integration-system/isp-lib/v2 => /Users/dmitrijgulacenkov/go/src/isp-lib2
