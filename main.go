@@ -40,7 +40,6 @@ func main() {
 		RequireRoutes(handleRouteUpdate).
 		RequireModule("journal", invoker.Journal.ReceiveServiceAddressList, false).
 		SubscribeBroadcastEvent(bootstrap.ListenRestartEvent())
-
 	requiredModules, err := proxy.InitProxies(cfg.Locations)
 	if err != nil {
 		log.Fatal(stdcodes.ModuleInvalidLocalConfig, err)
@@ -99,6 +98,10 @@ func onShutdown(_ context.Context, _ os.Signal) {
 
 func handleRouteUpdate(configs structure.RoutingConfig) bool {
 	routing.InitRoutes(configs)
+	err := proxy.InitProxiesFromConfigs(configs)
+	if err != nil {
+		log.Fatal(err)
+	}
 	return true
 }
 
