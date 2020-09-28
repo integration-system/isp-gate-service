@@ -134,6 +134,7 @@ func (v *verifiable) verifyAppToken() error {
 	if v.appId != -1 && int32(applicationId) != v.appId {
 		return createError("unauthorized", codes.Unauthenticated, "received unexpected application identity")
 	}
+
 	v.appId = int32(applicationId)
 	v.headers = verifiableHeaders
 	return nil
