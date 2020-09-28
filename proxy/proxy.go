@@ -131,10 +131,14 @@ func Find(path string) (Proxy, string) {
 				if path == iPath {
 					return item.proxy, path
 				}
+				if path == "/"+iPath {
+					return item.proxy, path[1:]
+				}
 			}
-		}
-		if strings.HasPrefix(path, item.pathPrefix) {
-			return item.proxy, getPathWithoutPrefix(path, item.pathPrefix)
+		} else {
+			if strings.HasPrefix(path, item.pathPrefix) {
+				return item.proxy, getPathWithoutPrefix(path, item.pathPrefix)
+			}
 		}
 	}
 	return nil, ""
